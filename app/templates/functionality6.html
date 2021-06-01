@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+    <title>NLP Analysis App</title>
+    <style>
+        body {
+  background-color: purple;
+}
+   .dropdown {list-style: none; background: white; padding: 4px; display: inline-block;border-radius:5px}
+   .dropdown .btn {background: white; color:black;}
+
+
+.custom-control-label::before,
+.custom-control-label::after {
+top: .8rem;
+width: 1.25rem;
+height: 1.25rem;
+}
+</style>
+</head>
+<body>
+<!---->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('gotoNextPage',page='/') }}">Upload/Download</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('gotoNextPage',page='functionality2') }}">Generate Corpus</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('gotoNextPage',page='functionality3') }}">Text Manipulation<span class="sr-only">(current)</span></a>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('gotoNextPage',page='functionality4') }}">Statistical Analysis</a>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('gotoNextPage',page='functionality5') }}">Corpus Comparison</a>
+      </li>
+        <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('gotoNextPage',page='functionality6') }}">Action Chaining</a>
+      </li>
+    </ul>
+    <span class="navbar-text">
+      NLP ANALYSIS APP
+    </span>
+  </div>
+</nav>
+
+
+<!----->
+    <h1 style="text-align:center;font-family:'Montserrat', sans-serif;color:white;font-size:45px;margin-top:30px;margin-bottom:50px">Action Chaining</h1>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+<div>
+
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" style="width:400px" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    SEE UPLOADED FILES
+  </button>
+  <div class="dropdown-menu" method="GET" aria-labelledby="dropdownMenuButton">
+    {% for each in uploaded_files %}
+        <option class="dropdown-item" value="{{each}}">{{each}}</option>
+    {% endfor %}
+  </div>
+</div>
+    <div style="margin-bottom:10px;"></div>
+
+    <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" style="width:400px" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    SEE GENERATED CORPUSES
+  </button>
+  <div class="dropdown-menu" method="GET" aria-labelledby="dropdownMenuButton">
+      {% for each in generated_corpuses %}
+    <option class="dropdown-item" value="{{each}}">{{each}}</option>
+      {% endfor %}
+  </div>
+</div>
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" style="width:400px" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    SEE SAVED ACTION CHAINS
+  </button>
+  <div class="dropdown-menu" method="GET" aria-labelledby="dropdownMenuButton">
+        {%for chain in chain_for_UI%}
+        <option class="dropdown-item" value="{{each}}">{{chain}}</option>
+        {%endfor%}
+  </div>
+</div>
+
+<h4 style="font-family:'Montserrat', sans-serif;color:white;font-size:30px;margin-top:60px">Choose Functionalities</h4>
+
+<form action="/functionality6" method="POST" enctype="multipart/form-data">
+
+    <div class="form-check form-switch">
+  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDisabled" disabled>
+  <label class="form-check-label" for="flexSwitchCheckDisabled" style="color:white;font-size:20px">Upload/Downlaod</label>
+</div>
+    <div class="form-check form-switch">
+  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="functionality2">
+  <label class="form-check-label" for="flexSwitchCheckDefault" style="color:white;font-size:20px">Generate Corpus</label>
+</div>
+<div class="form-check form-switch">
+  <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" name="functionality3">
+  <label class="form-check-label" for="flexSwitchCheckChecked" style="color:white;font-size:20px">Text Manipulation</label>
+</div>
+    <div class="form-check form-switch">
+  <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" name="functionality4">
+  <label class="form-check-label" for="flexSwitchCheckChecked" style="color:white;font-size:20px">Statistical Analysis</label>
+</div>
+    <div class="form-check form-switch">
+  <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" name="functionality5">
+  <label class="form-check-label" for="flexSwitchCheckChecked" style="color:white;font-size:20px">Corpus Comparison</label>
+</div>
+
+<div class="form-check form-switch">
+  <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" checked disabled>
+  <label class="form-check-label" for="flexSwitchCheckCheckedDisabled" style="color:white;font-size:20px">Action Chaining</label>
+</div>
+
+    <!--<div class="custom-control form-control-lg custom-checkbox">
+    <input type="checkbox" class="custom-control-input" name="functionality2">
+    <label class="custom-control-label" style="color:white">Generate Corpus</label>
+</div>
+
+    <div class="custom-control form-control-lg custom-checkbox">
+    <input type="checkbox" class="custom-control-input" name="functionality3">
+    <label class="custom-control-label" style="color:white">Text Manipulation</label>
+</div>
+
+    <div class="custom-control form-control-lg custom-checkbox">
+    <input type="checkbox" class="custom-control-input" name="functionality4">
+    <label class="custom-control-label"  style="color:white">Statistical Analysis</label>
+</div>
+
+    <div class="custom-control form-control-lg custom-checkbox">
+    <input type="checkbox" class="custom-control-input" name="functionality5">
+    <label class="custom-control-label" style="color:white">Corpus Comparison</label>
+</div>-->
+
+    <input type="submit" name="store" value="Store Action Chain" class="btn btn-light" style="margin-left:180px;margin-top:20px;width:160px;">
+</form>
+</div></div>
+
+
+</div>
+</body>
+</html>
